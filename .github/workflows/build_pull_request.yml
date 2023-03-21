@@ -12,6 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
       - name: Restore Cache
         uses: actions/cache@v2
         with:
@@ -39,6 +42,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
       - name: Restore Cache
         uses: actions/cache@v2
         with:
@@ -59,13 +65,15 @@ jobs:
           name: test-reports
           path: '**/build/reports/jacoco/testDebugCoverage/html/index.html'
 
-
   build:
     name: Build Debug
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
 
       - name: Restore Cache
         uses: actions/cache@v2
