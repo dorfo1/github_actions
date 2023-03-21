@@ -61,7 +61,10 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Run Jacoco
-        run: ./gradlew testDebugCoverage
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          script: ./gradlew testDebugCoverage
 
       - name: Upload Jacoco Reports
         if: ${{ always() }}
