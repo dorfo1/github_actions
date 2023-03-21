@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues>
+    <ID>PackageNaming:MainActivity.kt$package com.example.github_actions</ID>
+    <ID>PackageNaming:CustomActivity.kt$package com.example.github_actions.custom_module</ID>
+  </ManuallySuppressedIssues>
+  <CurrentIssues>
+  </CurrentIssues>
+</SmellBaseline>

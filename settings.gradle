@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "github_actions"
 include ':app'
+include ':custom_module'

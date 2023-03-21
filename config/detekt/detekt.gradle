@@ -1,0 +1,24 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+detekt {
+    toolVersion = detekt_version
+    config = files("$rootDir/config/detekt/detekt.yml")
+    baseline = file("$rootDir/config/detekt/detekt-baseline.xml")
+    buildUponDefaultConfig = true
+    autoCorrect = true
+    source = files("src/main/java", "src/main/kotlin")
+}
+
+tasks.named("detekt").configure {
+    reports {
+        xml.required.set(false)
+        txt.required.set(false)
+
+        html.required.set(true)
+        html.outputLocation.set(file("build/reports/detekt/detekt.html"))
+    }
+
+    doLast() {
+        print "file://${reports.html.destination}"
+    }
+}
