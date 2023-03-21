@@ -1,0 +1,87 @@
+name: Build Pull request
+
+on: pull_request
+
+
+jobs:
+
+  lint:
+    name: Detekt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore Cache
+          uses: actions/cache@v2
+          with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+
+      - name: Run Detekt
+        run : ./gradlew detekt
+
+      - name: Upload Detekt Reports
+          if: ${{ always() }}
+          uses: actions/upload-artifact@v2
+          with:
+            name: test-reports
+            path: '**/build/reports/detekt/detekt.html'
+
+  test:
+    name: Jacoco Coverage
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore Cache
+        uses: actions/cache@v2
+          with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+
+      - name: Run Jacoco
+          run: ./gradlew testDebugCoverage
+
+      - name: Upload Jacoco Reports
+          if: ${{ always() }}
+          uses: actions/upload-artifact@v2
+          with:
+            name: test-reports
+            path: '**/build/reports/jacoco/testDebugCoverage/html/index.html'
+
+
+  build:
+    name: Build Debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore Cache
+        uses: actions/cache@v2
+            with:
+              path: |
+                ~/.gradle/caches
+                ~/.gradle/wrapper
+              key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+              restore-keys: |
+                ${{ runner.os }}-gradle-
+
+      - name: Run AssembleDebug
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+          with:
+            name: apk
+            path: app/build/outputs/apk/debug/**.apk

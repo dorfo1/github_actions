@@ -1,0 +1,33 @@
+name: Build Develop
+
+on:
+  push:
+    branches: ["develop"]
+
+jobs:
+
+  build:
+    name: Build Debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore Cache
+        uses: actions/cache@v2
+          with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+
+      - name: Run AssembleDebug
+        run: ./gradlew assembleDebug
+
+      - name: Deploy to Firebase App Distribution
+        run: echo Deploying to firebase....
+
+      - name: Deployed to Firebase App Distribution
+        run: echo Deploy completed.
