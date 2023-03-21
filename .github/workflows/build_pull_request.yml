@@ -14,23 +14,23 @@ jobs:
 
       - name: Restore Cache
         uses: actions/cache@v2
-          with:
-            path: |
-              ~/.gradle/caches
-              ~/.gradle/wrapper
-            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-            restore-keys: |
-              ${{ runner.os }}-gradle-
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Run Detekt
         run : ./gradlew detekt
 
       - name: Upload Detekt Reports
-          if: ${{ always() }}
-          uses: actions/upload-artifact@v2
-          with:
-            name: test-reports
-            path: '**/build/reports/detekt/detekt.html'
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: '**/build/reports/detekt/detekt.html'
 
   test:
     name: Jacoco Coverage
@@ -41,23 +41,23 @@ jobs:
 
       - name: Restore Cache
         uses: actions/cache@v2
-          with:
-            path: |
-              ~/.gradle/caches
-              ~/.gradle/wrapper
-            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-            restore-keys: |
-              ${{ runner.os }}-gradle-
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Run Jacoco
-          run: ./gradlew testDebugCoverage
+        run: ./gradlew testDebugCoverage
 
       - name: Upload Jacoco Reports
-          if: ${{ always() }}
-          uses: actions/upload-artifact@v2
-          with:
-            name: test-reports
-            path: '**/build/reports/jacoco/testDebugCoverage/html/index.html'
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: '**/build/reports/jacoco/testDebugCoverage/html/index.html'
 
 
   build:
@@ -69,19 +69,19 @@ jobs:
 
       - name: Restore Cache
         uses: actions/cache@v2
-            with:
-              path: |
-                ~/.gradle/caches
-                ~/.gradle/wrapper
-              key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-              restore-keys: |
-                ${{ runner.os }}-gradle-
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Run AssembleDebug
         run: ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
-          with:
-            name: apk
-            path: app/build/outputs/apk/debug/**.apk
+        with:
+          name: apk
+          path: app/build/outputs/apk/debug/**.apk
