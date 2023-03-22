@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">github_actions</string>
+    <string name="go_custom_button_activity">Go Custom Button Activity</string>
 </resources>
