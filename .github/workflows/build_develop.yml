@@ -33,7 +33,7 @@ jobs:
 
       - name: Deploy to Firebase App Distribution
         run: |
-          echo $SA_JSON_KEY | base64 -d -i > key_firebase.json
+          echo $FIREBASE_APP_DISTRIBUTION_SECRET | base64 -d -i > key_firebase.json
           bundle exec fastlane firebase_distribution
         env:
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
