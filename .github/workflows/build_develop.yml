@@ -28,8 +28,7 @@ jobs:
       - name: Install Ruby & Bundle
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: '2.7'
-          bundler-cache: true
+          ruby-version: '2.7.0'
 
       - name: Deploy to Firebase App Distribution
         run: |
