@@ -5,7 +5,6 @@ on:
     branches: ["develop"]
 
 jobs:
-
   build:
     name: Build Debug
     runs-on: ubuntu-latest
@@ -26,11 +25,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run AssembleDebug
-        run: ./gradlew assembleDebug
+      - name: Install Ruby & Bundle
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.7.1'
+          bundler-cache: true
 
       - name: Deploy to Firebase App Distribution
-        run: echo Deploying to firebase....
-
-      - name: Deployed to Firebase App Distribution
-        run: echo Deploy completed.
+        run: |
+          echo $SA_JSON_KEY | base64 -d -i > key_firebase.json
+          bundle exec fastlane firebase_distribution
+        env:
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_APP_DISTRIBUTION_SECRET: ${{ secrets.FIREBASE_APP_DISTRIBUTION_SECRET }}
+          CI_PR_TITLE: ${{ github.event.pull_request.title }}
+          CI_COMMIT_BEFORE_SHA: ${{ github.event.before }}
+          CI_ENVIRONMENT_NAME: ${{ github.workflow }}
+          CI_PIPELINE_ID: ${{ github.run_number }}

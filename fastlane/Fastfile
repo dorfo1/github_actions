@@ -1,0 +1,44 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Firebase app distribution"
+  lane :firebase_distribution do
+    gradle(task: "assembleDebug")
+
+    changes = changelog_from_git_commits(
+        #commits_count: 10,
+        between: [ENV["CI_COMMIT_BEFORE_SHA"], "HEAD"],
+        pretty: "- (%ae) %s",
+        date_format: "short",
+        match_lightweight_tag: false,
+        merge_commit_filtering: "exclude_merges"
+    )
+
+    puts "Subindo nova versão (#{ENV["CI_PIPELINE_ID"]}) para o Firebase"
+
+    firebase_app_distribution(
+        app: ENV["FIREBASE_APP_ID"],
+        android_artifact_type: "APK",
+        service_credentials_file: "./key_firebase.json",
+        release_notes: changes,
+        debug: true,
+        testers_file: "./firebase_app_distribution/testers_file.txt"
+    )
+  end
+end
+
