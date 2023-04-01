@@ -26,9 +26,10 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Install Ruby & Bundle
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.0'
+          ruby-version: '3.0'
+          bundler-cache: true
 
       - name: Deploy to Firebase App Distribution
         run: |
