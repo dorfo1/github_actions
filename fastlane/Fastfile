@@ -29,11 +29,11 @@ platform :android do
         merge_commit_filtering: "exclude_merges"
     )
 
-    puts "Uploading new version(#{ENV["CI_PIPELINE_ID"]}) to Firebase"
+    puts "Subindo nova versão (#{ENV["CI_PIPELINE_ID"]}) para o Firebase"
 
     firebase_app_distribution(
         app: ENV["FIREBASE_APP_ID"],
-        android_artifact_type: ENV["FIREBASE_ARTIFACT_TYPE"] = "APK",
+        android_artifact_type: "APK",
         service_credentials_file: "./key_firebase.json",
         release_notes: changes,
         debug: true,
