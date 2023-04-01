@@ -4,11 +4,7 @@ on:
   push:
     branches: ["develop"]
 
-env:
-
-
 jobs:
-
   build:
     name: Build Debug
     runs-on: ubuntu-latest
