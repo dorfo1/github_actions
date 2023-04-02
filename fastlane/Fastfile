@@ -30,15 +30,18 @@ platform :android do
     )
 
     puts "Subindo nova versão (#{ENV["CI_PIPELINE_ID"]}) para o Firebase"
+    puts(ENV["CI_PR_TITLE"])
+    puts(ENV["CI_ENVIRONMENT_NAME"])
+    puts(changes)
 
-    firebase_app_distribution(
-        app: ENV["FIREBASE_APP_ID"],
-        android_artifact_type: "APK",
-        service_credentials_file: "firebase_credentials.json",
-        release_notes: changes,
-        debug: true,
-        testers_file: "./firebase_app_distribution/testers.txt"
-    )
+#     firebase_app_distribution(
+#         app: ENV["FIREBASE_APP_ID"],
+#         android_artifact_type: "APK",
+#         service_credentials_file: "firebase_credentials.json",
+#         release_notes: changes,
+#         debug: true,
+#         testers_file: "./firebase_app_distribution/testers.txt"
+#     )
   end
 end
 
