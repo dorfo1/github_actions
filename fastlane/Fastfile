@@ -37,7 +37,7 @@ platform :android do
         service_credentials_file: "firebase_credentials.json",
         release_notes: changes,
         debug: true,
-        testers_file: "./firebase_app_distribution/testers_file.txt"
+        testers_file: "./firebase_app_distribution/testers.txt"
     )
   end
 end
